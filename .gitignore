@@ -15,3 +15,7 @@ target/
 *.jar
 *.war
 *.ear
+
+_site
+.sass-cache
+.jekyll-metadata
