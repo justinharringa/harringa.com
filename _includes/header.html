@@ -14,8 +14,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="http://mail.harringa.com">Webmail</a></li>
-                    {% for node in site.pages %}
-                      {% if node.title and node.title != "Error" %}
+                    {% assign sorted_pages = site.pages | sort: 'header-order' %}
+                    {% for node in sorted_pages %}
+                      {% if node.title and node.header-order %}
                         {% if page.url == node.url %}
                         <li class="active">
                         {% else %}
