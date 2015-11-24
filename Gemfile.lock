@@ -70,6 +70,3 @@ DEPENDENCIES
   jekyll-feed
   rake
   s3_website
-
-BUNDLED WITH
-   1.10.6
