@@ -14,7 +14,7 @@ baseurl: ""
 url: "http://harringa.com"
 twitter_username: justinharringa
 github_username: justinharringa
-permalink: /blog/:year/:month/:day/:title/
+permalink: /posts/:year/:month/:day/:title/
 author:
   name: "Justin Harringa"
 
