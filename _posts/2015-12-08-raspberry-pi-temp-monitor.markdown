@@ -2,7 +2,7 @@
 layout: post
 title:  "Raspberry Pi Temperature Monitor"
 date:   2015-12-08 18:45:22 -0300
-categories: raspberry-pi experiment brewing python
+categories: raspberry-pi experiment brewing python aws dynamodb simpledb
 ---
 I've been wanting to experiment a bit with a [Raspberry Pi kit][rasp-pi] and a [DS18B20 waterproof temperature sensor][temp-sensor] that I bought. 
 Well, my wife and I brewed our first beer together in our apartment not too long ago and this seemed like a nice excuse to generate some 
