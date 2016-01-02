@@ -3,8 +3,7 @@
  */
 .site-header {
     border-top: 5px solid $grey-color-dark;
-    border-bottom: 1px solid $grey-color-light;
-    min-height: 56px;
+    min-height: 16px;
 
     // Positioning context for the mobile navigation icon
     position: relative;
@@ -98,8 +97,11 @@
  * Site footer
  */
 .site-footer {
+    position: absolute;
+    bottom: 0;
+    height: $spacing-unit * 2;
+    width: 100%;
     border-top: 1px solid $grey-color-light;
-    padding: $spacing-unit 0;
 }
 
 .footer-heading {
@@ -109,8 +111,19 @@
 
 .contact-list,
 .social-media-list {
+    display: inline-flex;
     list-style: none;
-    margin-left: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+
+.social-media-link {
+    &:not(:last-child) {
+        margin-right: 20px;
+    }
 }
 
 .footer-col-wrapper {
@@ -194,7 +207,9 @@
     font-size: 24px;
 }
 
-
+.push {
+    height: $spacing-unit * 2;
+}
 
 /**
  * Posts

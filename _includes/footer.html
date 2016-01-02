@@ -1,2 +1,14 @@
+<footer class="site-footer">
+    <div class="wrapper">
+        <ul class="social-media-list">
+            {% for network in site.social_networks %}
+                <li class="social-media-link">
+                    {% include icon-social.html username=site.social_username name=network.name uri=network.uri %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</footer>
+
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>

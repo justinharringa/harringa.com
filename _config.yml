@@ -12,8 +12,14 @@ description: >
   blog posts. Of course, all of that is subject to change.
 baseurl: ""
 url: "http://harringa.com"
-twitter_username: justinharringa
-github_username: justinharringa
+social_username: justinharringa
+social_networks:
+- name: GitHub
+  uri: github.com
+- name: LinkedIn
+  uri: linkedin.com/in
+- name: Twitter
+  uri: twitter.com
 permalink: /posts/:year/:month/:day/:title/
 author:
   name: "Justin Harringa"
