@@ -209,3 +209,27 @@ pre {
         }
     }
 }
+
+.my-picture {
+    display: inline-block;
+    margin: 0 auto 10px;
+    horiz-align: left;
+    border: 2px solid $brand-color;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.my-name,
+.my-title {
+    text-align: right;
+}
+
+.my-info {
+    border-bottom: 1px solid #e8e8e8;
+    padding: 2px;
+    margin: 5px auto;
+    //> div {
+    //    vertical-align: middle;
+    //}
+}
