@@ -2,7 +2,7 @@
 layout: page
 title: About Me
 permalink: /about/
-header-order: 2
+header-order: 3
 ---
 
 My name is Justin Harringa. I'm a developer who is currently living in
