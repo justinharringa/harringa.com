@@ -226,6 +226,11 @@ pre {
 }
 
 .my-info {
-    border-bottom: 1px solid #e8e8e8;
+    border-bottom: 3px solid #e8e8e8;
     padding-bottom: $spacing-unit / 2;
+}
+
+.featured-work-header {
+    padding-left: $spacing-unit / 3;
+    color: $grey-color;
 }
