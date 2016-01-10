@@ -23,17 +23,17 @@ gulp.task('responsive-images', function () {
             compressionLevel: 7,
             max: true
         }))
-        .pipe(gulp.dest('_site/images'));
+        .pipe(gulp.dest('images'));
 });
 
 gulp.task('minify-responsive-images', ['responsive-images'], function() {
-    return gulp.src('_site/images/*')
+    return gulp.src('images/*')
         .pipe(imagemin({
             progressive: true,
             svgoPlugins: [{removeViewBox: false}],
             use: [pngquant()]
         }))
-        .pipe(gulp.dest('_site/images'));
+        .pipe(gulp.dest('images'));
 });
 
 // Run static file server
