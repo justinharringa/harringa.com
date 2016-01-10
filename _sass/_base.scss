@@ -209,3 +209,34 @@ pre {
         }
     }
 }
+
+.my-picture {
+    display: inline-block;
+    margin: 0 auto 10px;
+    border: 2px solid $brand-color;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.hero-unit > div {
+    margin: $spacing-unit 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.my-info {
+    border-bottom: 3px solid #e8e8e8;
+    padding-bottom: $spacing-unit / 2;
+}
+
+.featured-work-header {
+    padding-left: $spacing-unit / 3;
+    color: $grey-color;
+    margin-bottom: 0;
+}
+
+.featured-work-link {
+    text-align: center;
+    margin: $spacing-unit auto;
+}

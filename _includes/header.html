@@ -1,5 +1,4 @@
 <header class="site-header">
-
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -17,12 +16,9 @@
                     {% assign sorted_pages = site.pages | sort: 'header-order' %}
                     {% for node in sorted_pages %}
                       {% if node.title and node.header-order %}
-                        {% if page.url == node.url %}
-                        <li class="active">
-                        {% else %}
-                        <li>
-                        {% endif %}
-                        <a href="{{ node.url | prepend: site.baseurl }}">{{ node.title }}</a></li>
+                        {% if page.url == node.url %}<li class="active">{% else %}<li>{% endif %}
+                            <a href="{{ node.url | prepend: site.baseurl }}">{{ node.title }}</a>
+                        </li>
                       {% endif %}
                     {% endfor %}
                 </ul>

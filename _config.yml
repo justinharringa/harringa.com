@@ -21,6 +21,7 @@ social_networks:
 - name: Twitter
   uri: twitter.com
 permalink: /posts/:year/:month/:day/:title/
+exclude: [Gemfile, Gemfile.lock, gulpfile.js, LICENSE, node_modules, package.json, Rakefile, README.md, s3_website.yml]
 author:
   name: "Justin Harringa"
 

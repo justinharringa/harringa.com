@@ -2,7 +2,7 @@
 layout: page
 title: Links
 permalink: /links/
-header-order: 1
+header-order: 2
 ---
 
 Some sites my friends run:
