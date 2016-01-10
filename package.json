@@ -1,0 +1,27 @@
+{
+  "name": "harringa-com",
+  "version": "0.0.1",
+  "description": "Harringa.com site",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justinharringa/harringa.com.git"
+  },
+  "author": "Justin Harringa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/justinharringa/harringa.com/issues"
+  },
+  "homepage": "https://github.com/justinharringa/harringa.com",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-load-plugins": "^1.2.0",
+    "gulp-responsive": "^2.0.0",
+    "gulp-responsive-config": "^1.0.0",
+    "imagemin-pngquant": "^4.2.0"
+  }
+}
