@@ -11,7 +11,7 @@ description: >
   Generally used as a playground for Justin Harringa but also includes
   blog posts. Of course, all of that is subject to change.
 baseurl: ""
-url: "http://harringa.com"
+url: "https://harringa.com"
 social_username: justinharringa
 social_networks:
 - name: GitHub
