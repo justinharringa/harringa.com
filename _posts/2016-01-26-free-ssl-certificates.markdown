@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Free SSL Certificates"
-date:   2016-01-26 22:34:42 -0300
+date:   2016-01-26 08:08:42 -0300
 categories: certificates ssl privacy
 ---
 I got an e-mail today from [Amazon](amazon) informing me that they have released the [AWS Certificate Manager](aws-cert-manager)
