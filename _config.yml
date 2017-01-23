@@ -17,7 +17,7 @@ social_networks:
 - name: GitHub
   uri: github.com
 - name: LinkedIn
-  uri: linkedin.com/in
+  uri: www.linkedin.com/in
 - name: Twitter
   uri: twitter.com
 permalink: /posts/:year/:month/:day/:title/
