@@ -1,4 +1,4 @@
-[![Build Status](https://snap-ci.com/justinharringa/harringa.com/branch/master/build_image)](https://snap-ci.com/justinharringa/harringa.com/branch/master)
+[![Build Status](https://travis-ci.org/justinharringa/harringa.com.svg?branch=master)](https://travis-ci.org/justinharringa/harringa.com)
 
 # Purpose 
 
