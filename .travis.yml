@@ -5,10 +5,14 @@ env:
   - secure: alDoziVxl9aKTmHmsufbTC7fs8EPrf7AqUKkT4RMWFuyzhzpEmkVobANY6eY3qHnea5Mid5TiHu3GRcmJ1OtOTdIe/LI6b/fGmu7tvIYBB3wX0zkM6C2JmAs8ee54DXgYLknwhW3gXpC1CGgAB9geR32d5a6P3YSLOsD1gWH2as=
   - S3_BUCKET=www.harringa.com
   - JEKYLL_ENV=production
-
 language: ruby
 rvm:
-  - 2.2
+- 2.2
 cache: bundler
 before_install: gem install bundler
-script: bundle exec rake test
+script:
+- bundle exec rake test
+- bundle exec s3_website push --site _site
+notifications:
+  slack:
+    secure: CmWDLtI/ANpVInNLTa1ze6uvG/g6vK3Zz2xedq+m8QgHZtOw1KAmKiN89vEVUQmJTPHIjbj+KJTz+Q+5nAnoMbEIRggbsPeBXHXWO8fjfL+wzWmqkWxzoJmBokZOmUjToNeegVL0v+97Rl1lDadS31aGC1iZFSPcewLTJ410Tow=
