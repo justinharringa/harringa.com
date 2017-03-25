@@ -5,6 +5,7 @@ env:
   - secure: alDoziVxl9aKTmHmsufbTC7fs8EPrf7AqUKkT4RMWFuyzhzpEmkVobANY6eY3qHnea5Mid5TiHu3GRcmJ1OtOTdIe/LI6b/fGmu7tvIYBB3wX0zkM6C2JmAs8ee54DXgYLknwhW3gXpC1CGgAB9geR32d5a6P3YSLOsD1gWH2as=
   - S3_BUCKET=www.harringa.com
   - JEKYLL_ENV=production
+  - BUNDLE_PATH=/var/.bundle
 
 language: ruby
 rvm:
