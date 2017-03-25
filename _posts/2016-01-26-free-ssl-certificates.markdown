@@ -13,7 +13,7 @@ with automation and limitations on what you could do. I'm not sure if they've re
 Regardless, I thought I would see if the [AWS Certificate Manager][aws-cert-manager] process was easy enough (and that 
 "free" didn't mean that I was giving something up). Sure enough, it was incredibly simple (so simple that I spend no time
 automating the process, but that's something I can tackle before my cert renewal). It took me about 10-20 minutes to get
-it all set up and then I just had to wait for the change to propagate through [CloudFront][https://aws.amazon.com/cloudfront/].
+it all set up and then I just had to wait for the change to propagate through [CloudFront][cloudfront].
 
 So, you should notice that now almost everything is https with a nice green lock. Hooray!
 
