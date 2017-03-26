@@ -25,8 +25,12 @@ exclude: [Gemfile, Gemfile.lock, gulpfile.js, LICENSE, node_modules, package.jso
 author:
   name: "Justin Harringa"
 
+maps:
+  google:
+    api_key: AIzaSyC7CdiDDoEfq6B-VK1Zbi8bwq6fDkakC1A
 # Build settings
 markdown: kramdown
 
 gems: 
   - jekyll-feed
+  - jekyll-maps
