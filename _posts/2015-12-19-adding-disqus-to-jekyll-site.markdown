@@ -2,10 +2,10 @@
 layout: post
 title:  "Adding Disqus to Jekyll Site"
 date:   2015-12-19 16:34:42 -0300
-categories: disqus jekyll continuous-delivery snap-ci liquid continuous-integration
+categories: disqus jekyll continuous-delivery snap-ci liquid continuous-integration travis-ci
 ---
 As I mentioned in my [Hello Jekyll!][hello-jekyll] post, I'm administering this site with [Jekyll][jekyll]. I've got 
-all of my code in [GitHub][gh-site] and am using [Snap CI][snap-ci] for continuous integration / continuous delivery of 
+all of my code in [GitHub][gh-site] and am using [Travis CI][travis-ci] for continuous integration / continuous delivery of 
 the site. That's been working quite well thus far, though I'd like to add more testing utilities. 
 
 One thing that was missing once I moved my blog from Blogger to [Jekyll][jekyll] was a commenting system. I've seen 
@@ -48,11 +48,14 @@ ended up doing to suit this need within my
 
 You'll notice that I'm also using separate Disqus shortnames for environments per their recommendation. [Jekyll][jekyll]
 provides a jekyll.environment which defaults to 'development' if you haven't set a JEKYLL_ENV environment variable. So,
-in my [Snap CI][snap-ci] configuration, I simply do just that. This way I can test out Disqus without worrying about 
+in my [Travis CI][travis-ci] configuration, I simply do just that. This way I can test out Disqus without worrying about 
 accidentally posting test comments to my production site.
+
+Editorial note: I was using Snap CI from ThoughtWorks but they have recently shut down that product. I've moved this to Travis CI
+and have updated the links.
 
 [liquid]: https://github.com/Shopify/liquid/wiki
 [jekyll]: http://jekyllrb.com/
 [hello-jekyll]: {% post_url 2015-11-15-hello-jekyll %}
-[snap-ci]: https://snap-ci.com/justinharringa/harringa.com/branch/master
+[travis-ci]: https://travis-ci.org/justinharringa/harringa.com
 [gh-site]: https://github.com/justinharringa/harringa.com
