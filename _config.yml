@@ -31,6 +31,6 @@ maps:
 # Build settings
 markdown: kramdown
 
-gems: 
+plugins: 
   - jekyll-feed
   - jekyll-maps
