@@ -15,7 +15,7 @@ script:
 deploy:
   skip_cleanup: true
   provider: script
-  script: bundle exec s3_website push --site _site
+  script: 'PATH="${TRAVIS_BUILD_DIR}/bin:$PATH" rvm "$TRAVIS_RUBY_VERSION" do bundle exec s3_website push --site _site'
   on:
     branch: master
 notifications:
