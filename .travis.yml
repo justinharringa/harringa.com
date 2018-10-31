@@ -9,7 +9,7 @@ language: ruby
 rvm:
 - 2.5
 cache: bundler
-before_install: gem install bundler && bundle install s3_website
+before_install: gem install bundler && bundle install
 script:
 - bundle exec rake test
 deploy:
