@@ -12,6 +12,9 @@ header-order: 0
         <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
       </h2>
       {{ post.excerpt }}
+      {% if post.excerpt != post.content %}
+              <a href="{{ site.baseurl }}{{ post.url }}" class="nav-toggle">Read more...</a>
+      {% endif %}
     </li>
   {% endfor %}
 </ul>
