@@ -7,7 +7,7 @@ env:
   - JEKYLL_ENV=production
 language: ruby
 rvm:
-- 2.2
+- 2.5
 cache: bundler
 before_install: gem install bundler && bundle install s3_website
 script:
