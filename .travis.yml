@@ -19,7 +19,7 @@ before_deploy:
 deploy:
   skip_cleanup: true
   provider: script
-  script: 'docker run --name s3push --mount type=bind,source="$(pwd)"/_site,target=/site/_site,readonly justinharringa/s3_website push --site _site'
+  script: 'docker run --name s3push --mount type=bind,source="$(pwd)",target=/site,readonly justinharringa/s3_website push --site _site'
   on:
     branch: master
 notifications:
