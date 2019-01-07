@@ -7,7 +7,7 @@ var express = require('express');
 var EXPRESS_PORT = 4000;
 var EXPRESS_ROOT = '_site/';
 
-gulp.task('responsive-images', function () {
+gulp.task('responsive-images', gulp.series(function () {
     // Make configuration from existing HTML and CSS files
     var config = $.responsiveConfig([
         '_site/**/*.css',
@@ -24,9 +24,9 @@ gulp.task('responsive-images', function () {
             max: true
         }))
         .pipe(gulp.dest('images'));
-});
+}));
 
-gulp.task('minify-responsive-images', ['responsive-images'], function() {
+gulp.task('minify-responsive-images', gulp.series('responsive-images', function() {
     return gulp.src('images/*')
         .pipe(imagemin({
             progressive: true,
@@ -34,13 +34,13 @@ gulp.task('minify-responsive-images', ['responsive-images'], function() {
             use: [pngquant()]
         }))
         .pipe(gulp.dest('images'));
-});
+}));
 
 // Run static file server
-gulp.task('serve', function () {
+gulp.task('serve', gulp.series(function () {
     var server = express();
     server.use(express.static(EXPRESS_ROOT));
     server.listen(EXPRESS_PORT);
-});
+}));
 
-gulp.task('default', ['minify-responsive-images']);
+gulp.task('default', gulp.series('minify-responsive-images'));
