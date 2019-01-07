@@ -6,16 +6,20 @@ env:
   - S3_BUCKET=www.harringa.com
   - JEKYLL_ENV=production
 language: ruby
+services:
+  - docker
 rvm:
 - 2.5
 cache: bundler
 before_install: gem install bundler
 script:
 - bundle exec rake test
+before_deploy:
+- docker pull justinharringa/s3_website
 deploy:
   skip_cleanup: true
   provider: script
-  script: 'PATH="${TRAVIS_BUILD_DIR}/bin:$PATH" rvm "$TRAVIS_RUBY_VERSION" do bundle exec s3_website push --site _site'
+  script: 'docker run --name s3push --mount type=bind,source="$(pwd)"/site,target=/site,readonly s3_website push --site _site'
   on:
     branch: master
 notifications:
