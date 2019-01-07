@@ -19,7 +19,7 @@ before_deploy:
 deploy:
   skip_cleanup: true
   provider: script
-  script: 'docker run --name s3push --mount type=bind,source="$(pwd)",target=/site,readonly justinharringa/s3_website push --site _site'
+  script: 'docker run --rm -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e S3_BUCKET -e AWS_CLOUDFRONT_DISTRIBUTION --mount type=bind,source="$(pwd)",target=/site,readonly justinharringa/s3_website push --site _site'
   on:
     branch: master
 notifications:
