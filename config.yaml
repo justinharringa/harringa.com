@@ -1,0 +1,43 @@
+baseURL: https://harringa.com
+disablePathToLower: true
+languageCode: en-us
+title: Harringa.com
+description: Generally used as a playground for Justin Harringa but also includes blog posts. Of course, all of that is subject to change.
+
+# Links format
+permalinks:
+  posts: posts/:year/:month/:title/
+
+taxonomies:
+  category: categories
+  tag: tags
+
+googleAnalytics: "UA-4900256-1"
+disqusShortname: "harringa"
+
+#theme: bota
+
+params:
+  author: Justin Harringa
+  siteDescription: Generally used as a playground for Justin Harringa but also includes blog posts. Of course, all of that is subject to change.
+  googleMapsKey: AIzaSyC7CdiDDoEfq6B-VK1Zbi8bwq6fDkakC1A
+  blogPostTaxonomy: posts
+
+menu:
+  main:
+  - identifier: webmail
+    name: Webmail
+    url: https://mail.harringa.com/
+    weight: -110
+  - name: Blog Posts
+    url: /posts/
+    weight: -100
+  - name: Portfolio
+    url: /portfolio/
+    weight: -90
+  - name: Links
+    url: /links/
+    weight: -80
+  - name: About Me
+    url: /about/
+    weight: -70

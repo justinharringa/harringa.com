@@ -1,0 +1,97 @@
+---
+layout: page
+title: About Me
+permalink: /about/
+header-order: 3
+---
+<style>
+    /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+    #map {
+        height: 100%;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<h2>Where I've Lived</h2>
+
+<div id="map" style="width:100%;height:400px;" class="map">I'm a map</div>
+<script>
+
+    // Initialize and add the map
+    function initMap() {
+      // // The location of Uluru
+      // var uluru = {lat: -25.344, lng: 131.036};
+      // // The map, centered at Uluru
+      // var map = new google.maps.Map(document.getElementById('map'), {zoom: 4, center: uluru});
+      // // The marker, positioned at Uluru
+      // var marker = new google.maps.Marker({position: uluru, map: map});
+        var zoomLevel = 2;
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: zoomLevel,
+            center: new google.maps.LatLng(0, 0)
+        });
+
+        // Create an array of alphabetical characters used to label the markers.
+        var bounds = new google.maps.LatLngBounds()
+        var infoWindow = new google.maps.InfoWindow()
+        // Add some markers to the map.
+        // Note: The code uses the JavaScript Array.prototype.map() method to
+        // create an array of markers based on a given "locations" array.
+        // The map() method here has nothing to do with the Google Maps API.
+        var markers = locations.map(function(location, i) {
+            var marker = new google.maps.Marker({
+                position: location,
+                title: location.title,
+                url: location.url,
+                image: "",
+                // label: location.title
+            });
+            bounds.extend(marker.position)
+            marker.addListener('click', function markerPopup() {
+                var content = '<div class="map-info-window"><h5>' + this.title + '</h5>'
+                var imageTag =
+                    this.image.length > 0 &&
+                    '<img src="' + this.image + '" alt="' + this.title + '"/>'
+                if (this.url.length > 0) {
+                    var linkContent = imageTag || this.url_text || 'View'
+                    content += '<a href="' + this.url + '">' + linkContent + '</a>'
+                } else if (imageTag) {
+                    content += imageTag
+                }
+                content += '</div>'
+                infoWindow.setContent(content)
+                infoWindow.open(marker, this)
+            })
+            return marker
+        });
+        // Add a marker clusterer to manage the markers.
+        var markerCluster = new MarkerClusterer(map, markers,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
+        map.fitBounds(bounds)
+        google.maps.event.addListenerOnce(map, 'idle', function() {
+            this.setZoom(zoomLevel);
+
+        })
+    }
+    var locations = [
+        {lat: 42.493652, lng: -92.344208, title: "Waterloo, IA", url: "https://en.wikipedia.org/wiki/Waterloo,_Iowa", image: ""},
+        {lat: 41.585301, lng: -93.620959, title: "Des Moines, IA", url: "https://en.wikipedia.org/wiki/Des_Moines,_Iowa", image: ""},
+        {lat: 41.523052, lng: -90.575724, title: "Davenport, IA", url: "https://en.wikipedia.org/wiki/Davenport,_Iowa", image: ""},
+        {lat: -8.063196, lng: -34.871081, title: "Recife, PE Brazil", url: "https://en.wikipedia.org/wiki/Recife", image: ""},
+        {lat: 37.765296, lng: -122.438557, title: "San Francisco, CA", url: "https://en.wikipedia.org/wiki/San_Francisco", image: ""},
+    ]
+
+</script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+</script>
+
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-PlAuGvDLWiISbCsziwbX5sZgKAdUsGU&callback=initMap">
+</script>

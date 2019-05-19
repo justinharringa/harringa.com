@@ -9,14 +9,5 @@
 .env
 node_modules
 
-target/
-
-# Package Files #
-*.zip
-*.jar
-*.war
-*.ear
-
-_site
-.sass-cache
-.jekyll-metadata
+/public
+resources

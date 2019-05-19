@@ -1,0 +1,3 @@
+[submodule "themes/bota"]
+	path = themes/bota
+	url = git@github.com:justinharringa/bota-hugo-theme.git
