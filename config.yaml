@@ -38,6 +38,3 @@ menu:
   - name: Links
     url: /links/
     weight: -80
-  - name: About Me
-    url: /about/
-    weight: -70
