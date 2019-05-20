@@ -27,7 +27,7 @@ The process was fairly simple. You basically just do the following:
 
 1. Register your site
 1. Add the [Universal Embed Code](https://disqus.com/admin/universalcode/) to your site however you'd like, or follow 
-their [instructions for Jekyll](https://help.disqus.com/customer/portal/articles/472138-jekyll-installation-instructions)
+their [instructions for Jekyll](https://help.disqus.com/installation/jekyll-installation-instructions)
 1. Edit the variables in the code to provide your canonical URL and page identifier
 
 The nice thing about [Jekyll][jekyll] is that you can use [Liquid][liquid] to fill this in for you. So here's what I 

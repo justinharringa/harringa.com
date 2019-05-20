@@ -7,6 +7,5 @@ header-order: 2
 
 Some sites my friends run:
 
-- [jesse.weblogs.us](http://jesse.weblogs.us/)
-- [Gongol.com](http://www.gongol.com)
 - [Letania Ferreira](http://www.letaniaferreira.com/)
+- [Gongol.com](http://www.gongol.com)
