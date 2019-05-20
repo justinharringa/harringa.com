@@ -4,7 +4,7 @@ workflow "CD" {
 }
 action "Shell" {
   uses = "actions/bin/sh@master"
-  args = ["ls -ltr"]
+  args = ["ls -ltrR"]
 }
 action "Hugo broken link check with muffet" {
   uses = "peaceiris/actions-hugo-link-check@v0.55.6"
