@@ -1,6 +1,9 @@
 baseURL: https://harringa.com
 disablePathToLower: true
 languageCode: en-us
+ignoreFiles: [
+    "build/*"
+  ]
 title: Harringa.com
 description: Generally used as a playground for Justin Harringa but also includes blog posts. Of course, all of that is subject to change.
 
