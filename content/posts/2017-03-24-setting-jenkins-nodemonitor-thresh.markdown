@@ -2,6 +2,7 @@
 layout: post
 title:  "Setting Jenkins Node Monitor Thresholds with Groovy"
 date:   2017-03-24 18:28:42 -0700
+url: posts/2017/03/25/setting-jenkins-nodemonitor-thresh/
 tags:
 - jenkins
 - configuration

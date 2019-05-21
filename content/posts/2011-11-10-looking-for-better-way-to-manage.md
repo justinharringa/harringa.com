@@ -2,6 +2,7 @@
 layout: post
 title: Looking for a better way to manage passwords?
 date: '2011-11-10T22:41:00.001-06:00'
+url: posts/2011/11/11/looking-for-better-way-to-manage/
 author: Justin
 tags:
 - iOS

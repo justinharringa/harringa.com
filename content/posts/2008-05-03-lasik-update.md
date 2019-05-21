@@ -2,6 +2,7 @@
 layout: post
 title: Lasik Update
 date: '2008-05-03T11:17:00.002-05:00'
+url: posts/2008/05/03/lasik-update/
 author: Justin
 tags:
 - dry eyes

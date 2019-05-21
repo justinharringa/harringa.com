@@ -2,6 +2,7 @@
 layout: post
 title:  "Raspberry Pi Temperature Monitor"
 date:   2015-12-08 18:45:22 -0300
+url: posts/2015/12/08/raspberry-pi-temp-monitor/
 tags:
 - raspberry-pi
 - experiment

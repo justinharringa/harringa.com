@@ -2,6 +2,7 @@
 layout: post
 title:  "Open Sourcing Dockerfile Image Update"
 date:   2018-04-08 12:40:42 -0700
+url: posts/2018/04/08/dockerfile-image-update-open-source/
 tags:
 - docker
 - github

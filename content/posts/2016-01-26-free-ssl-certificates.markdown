@@ -2,6 +2,7 @@
 layout: post
 title:  "Free SSL Certificates"
 date:   2016-01-26 08:08:42 -0300
+url: posts/2016/01/26/free-ssl-certificates/
 tags:
 - certificates
 - ssl

@@ -2,6 +2,7 @@
 layout: post
 title:  "Hello Jekyll!"
 date:   2015-11-15 14:30:22 -0300
+url: posts/2015/11/15/hello-jekyll/
 tags:
 - jekyll
 - update

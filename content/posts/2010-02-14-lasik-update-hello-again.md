@@ -2,6 +2,7 @@
 layout: post
 title: Lasik Update / Hello Again
 date: '2010-02-14T13:10:00.005-06:00'
+url: posts/2010/02/14/lasik-update-hello-again/
 author: Justin
 tags:
 - dry eyes

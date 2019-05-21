@@ -2,6 +2,7 @@
 layout: post
 title: Sacrificial Architecture
 date: '2014-11-19T07:25:00.003-06:00'
+url: posts/2014/11/19/sacrificial-architecture/
 author: Justin
 tags:
 - design

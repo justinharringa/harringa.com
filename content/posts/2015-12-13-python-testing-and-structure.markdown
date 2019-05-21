@@ -2,6 +2,7 @@
 layout: post
 title:  "Python Testing and Structure"
 date:   2015-12-13 13:05:22 -0300
+url: posts/2015/12/13/python-testing-and-structure/
 tags:
 - python
 - TDD

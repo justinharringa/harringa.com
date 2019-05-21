@@ -2,6 +2,7 @@
 layout: post
 title: Apple's iTunes Match is live!
 date: '2011-11-14T20:24:00.001-06:00'
+url: posts/2011/11/15/apples-itunes-match-is-live/
 author: Justin
 tags:
 - apple
