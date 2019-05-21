@@ -11,16 +11,11 @@ action "Submodule update" {
   args = ["submodule", "update"]
   needs = ["Submodule init"]
 }
-action "Shell" {
-  uses = "actions/bin/sh@master"
-  args = ["ls -ltrR"]
-  needs = ["Submodule update"]
-}
 action "Hugo broken link check with muffet" {
   uses = "peaceiris/actions-hugo-link-check@v0.55.6"
   env = {
     HUGO_OPTIONS = "-t bota"
     OPTIONS = "-e 'linkedin.com' -e 'mail.harringa.com'"
   }
-  needs = ["Shell"]
+  needs = ["Submodule update"]
 }
