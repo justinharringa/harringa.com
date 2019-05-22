@@ -37,7 +37,7 @@ action "Prod s3_website push" {
 }
 
 workflow "PR" {
-  resolves = ["PR s3_website push"]
+  resolves = ["PR s3_website push", "Spit out event"]
   on = "push"
 }
 
