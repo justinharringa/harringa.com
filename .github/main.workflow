@@ -3,9 +3,15 @@ workflow "CD" {
   on = "push"
 }
 
+action "Master Branch" {
+  uses = "actions/bin/filter@b2bea07"
+  args = "branch master"
+}
+
 action "Submodule init" {
   uses = "docker://alpine/git"
   args = ["submodule", "init"]
+  needs = ["Master Branch"]
 }
 
 action "Submodule update" {
@@ -20,15 +26,9 @@ action "Build" {
   args = "--theme=bota"
 }
 
-action "Master Branch" {
-  needs = ["Build"]
-  uses = "actions/bin/filter@b2bea07"
-  args = "branch master"
-}
-
 action "Prod s3_website push" {
   uses = "docker://justinharringa/s3_website:master"
-  needs = ["Master Branch"]
+  needs = ["Build"]
   secrets = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_CLOUDFRONT_DISTRIBUTION"]
   args = "push --site build"
   env = {
@@ -36,21 +36,6 @@ action "Prod s3_website push" {
   }
 }
 
-action "PR-filter" {
-  uses = "actions/bin/filter@master"
-  args = "ref refs/pulls/*"
-  needs = ["Build"]
-}
-
-action "PR s3_website push" {
-  uses = "docker://justinharringa/s3_website:master"
-  needs = ["PR-filter"]
-  secrets = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"]
-  args = "push --site build"
-  env = {
-    S3_BUCKET = "pr.review.harringa.com"
-  }
-}
 workflow "PR" {
   resolves = ["PR s3_website push"]
   on = "push"
@@ -61,27 +46,27 @@ action "PR-filter" {
   args = "ref refs/pulls/*"
 }
 
-action "Submodule init" {
+action "PR Submodule init" {
   uses = "docker://alpine/git"
   args = ["submodule", "init"]
   needs = ["PR-filter"]
 }
 
-action "Submodule update" {
+action "PR Submodule update" {
   uses = "docker://alpine/git"
   args = ["submodule", "update"]
-  needs = ["Submodule init"]
+  needs = ["PR Submodule init"]
 }
 
-action "Build" {
+action "PR Build" {
   uses = "docker://klakegg/hugo:0.55.6-ext"
-  needs = "Submodule update"
+  needs = "PR Submodule update"
   args = "--theme=bota"
 }
 
 action "PR s3_website push" {
   uses = "docker://justinharringa/s3_website:master"
-  needs = ["Build"]
+  needs = ["PR Build"]
   secrets = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"]
   args = "push --site build"
   env = {
