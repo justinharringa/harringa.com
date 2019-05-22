@@ -1,4 +1,4 @@
-workflow "CD" {
+workflow "PR" {
   resolves = ["PR s3_website push"]
   on = "push"
 }
