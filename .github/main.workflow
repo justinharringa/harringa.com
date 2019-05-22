@@ -41,9 +41,22 @@ workflow "PR" {
   on = "push"
 }
 
+
+action "Not master" {
+  uses = "actions/bin/filter@master"
+  args = "not branch master"
+}
+
 action "PR-filter" {
   uses = "actions/bin/filter@master"
-  args = "ref refs/pulls/*"
+  args = "ref refs/heads/*"
+  needs = ["Not master"]
+}
+
+action "Spit out event" {
+  uses = "docker://alpine/git"
+  runs = ["sh", "-c", "echo $GITHUB_EVENT"]
+  needs = ["PR-filter"]
 }
 
 action "PR Submodule init" {
