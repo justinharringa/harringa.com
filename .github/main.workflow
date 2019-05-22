@@ -1,5 +1,5 @@
 workflow "CD" {
-  resolves = ["Prod s3_website push", "PR s3_website push"]
+  resolves = ["Prod s3_website push"]
   on = "push"
 }
 
