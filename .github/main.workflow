@@ -15,7 +15,7 @@ action "Submodule update" {
 }
 
 action "Build" {
-  uses = "srt32/hugo-action@v0.0.3"
+  uses = "docker://klakegg/hugo:0.55.6"
   needs = "Submodule update"
   args = "--theme=bota"
 }
