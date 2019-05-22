@@ -15,7 +15,7 @@ action "Submodule update" {
 }
 
 action "Build" {
-  uses = "docker://klakegg/hugo:0.55.6"
+  uses = "docker://klakegg/hugo:0.55.6-ext"
   needs = "Submodule update"
   args = "--theme=bota"
 }
