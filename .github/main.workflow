@@ -41,6 +41,10 @@ workflow "PR" {
   on = "push"
 }
 
+action "actor-filter" {
+  uses = "actions/bin/filter@master"
+  args = "actor justinharringa"
+}
 
 action "Not master" {
   uses = "actions/bin/filter@master"
