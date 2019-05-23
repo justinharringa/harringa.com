@@ -3,6 +3,7 @@ workflow "CD" {
   on = "push"
 }
 
+
 action "Master Branch" {
   uses = "actions/bin/filter@b2bea07"
   args = "branch master"
@@ -37,7 +38,7 @@ action "Prod s3_website push" {
 }
 
 workflow "PR" {
-  resolves = ["PR s3_website push", "Spit out event"]
+  resolves = ["PR s3_website push"]
   on = "push"
 }
 
