@@ -25,6 +25,9 @@ action "Build" {
   uses = "docker://klakegg/hugo:0.55.6-ext"
   needs = "Submodule update"
   args = "--theme=bota"
+  env = {
+    HUGO_DESTINATION = "/src/public"
+  }
 }
 
 action "Prod s3_website push" {
@@ -75,6 +78,9 @@ action "PR Build" {
   uses = "docker://klakegg/hugo:0.55.6-ext"
   needs = "PR Submodule update"
   args = "--theme=bota"
+  env = {
+    HUGO_DESTINATION = "/src/public"
+  }
 }
 
 action "Check build output" {
