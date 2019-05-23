@@ -30,7 +30,7 @@ menu:
   main:
   - identifier: webmail
     name: Webmail
-    url: https://mail.harringa.com/
+    url: http://mail.harringa.com/
     weight: -110
   - name: Blog Posts
     url: /posts/
