@@ -38,7 +38,7 @@ action "Prod s3_website push" {
 }
 
 workflow "PR" {
-  resolves = ["PR s3_website push"]
+  resolves = ["PR s3_website push", "Check build output"]
   on = "push"
 }
 
@@ -75,6 +75,12 @@ action "PR Build" {
   uses = "docker://klakegg/hugo:0.55.6-ext"
   needs = "PR Submodule update"
   args = "--theme=bota"
+}
+
+action "Check build output" {
+  uses = "docker://alpine/git"
+  runs = ["/bin/sh", "-c", "ls -laR"]
+  needs = ["PR Build"]
 }
 
 action "PR s3_website push" {
