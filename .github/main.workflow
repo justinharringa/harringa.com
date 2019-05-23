@@ -42,7 +42,7 @@ action "Prod s3_website push" {
 }
 
 workflow "PR" {
-  resolves = ["PR s3_website push", "Check build output"]
+  resolves = ["PR s3_website push"]
   on = "push"
 }
 
@@ -84,15 +84,15 @@ action "PR Build" {
   }
 }
 
-action "Check build output" {
-  uses = "docker://klakegg/hugo:0.55.6-ext"
-  runs = ["/bin/sh", "-c", "ls -laR"]
+action "No cloudfront in s3_website.yml" {
+  uses = "docker://alpine/git"
+  runs = ["/bin/sh", "-c", "sed -i '/cloudfront_distribution_id/d' ./s3_website.yml"]
   needs = ["PR Build"]
 }
 
 action "PR s3_website push" {
   uses = "docker://justinharringa/s3_website:master"
-  needs = ["PR Build"]
+  needs = ["No cloudfront in s3_website.yml"]
   secrets = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"]
   args = "push --site public"
   env = {
