@@ -32,7 +32,7 @@ their [instructions for Jekyll](https://help.disqus.com/installation/jekyll-inst
 
 The nice thing about [Jekyll][jekyll] is that you can use [Liquid][liquid] to fill this in for you. So here's what I 
 ended up doing to suit this need within my 
-[template file specifically for Disqus](https://github.com/justinharringa/harringa.com/blob/master/_includes/disqus.html):
+[template file specifically for Disqus](https://github.com/justinharringa/harringa.com/blob/0ded83f/_includes/disqus.html):
 
 {{< highlight javascript >}}
 <script>
