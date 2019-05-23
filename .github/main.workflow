@@ -30,7 +30,7 @@ action "Prod s3_website push" {
   uses = "docker://justinharringa/s3_website:master"
   needs = ["Build"]
   secrets = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_CLOUDFRONT_DISTRIBUTION"]
-  args = "push --site build"
+  args = "push --site public"
   env = {
     S3_BUCKET = "www.harringa.com"
   }
@@ -49,18 +49,13 @@ action "actor-filter" {
 action "Not master" {
   uses = "actions/bin/filter@master"
   args = "not branch master"
+  needs = ["actor-filter"]
 }
 
 action "PR-filter" {
   uses = "actions/bin/filter@master"
   args = "ref refs/heads/*"
   needs = ["Not master"]
-}
-
-action "Spit out event" {
-  uses = "docker://alpine/git"
-  runs = ["sh", "-c", "echo $GITHUB_EVENT"]
-  needs = ["PR-filter"]
 }
 
 action "PR Submodule init" {
@@ -85,7 +80,7 @@ action "PR s3_website push" {
   uses = "docker://justinharringa/s3_website:master"
   needs = ["PR Build"]
   secrets = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"]
-  args = "push --site build"
+  args = "push --site public"
   env = {
     S3_BUCKET = "pr.review.harringa.com"
   }
