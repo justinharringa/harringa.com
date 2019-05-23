@@ -87,7 +87,7 @@ action "PR Build" {
 
 action "Check build output" {
   uses = "docker://klakegg/hugo:0.55.6-ext"
-  runs = ["/bin/sh", "-c", "ls -laR", "&&", "pwd"]
+  runs = ["/bin/sh", "-c", "ls -laR && pwd"]
   needs = ["PR Build"]
 }
 
