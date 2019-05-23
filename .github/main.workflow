@@ -26,7 +26,8 @@ action "Build" {
   needs = "Submodule update"
   args = "--theme=bota"
   env = {
-    HUGO_DESTINATION = "/src/public"
+    HUGO_DESTINATION = "/src/public",
+    HUGO_ENV = "production"
   }
 }
 
@@ -79,13 +80,14 @@ action "PR Build" {
   needs = "PR Submodule update"
   args = "--theme=bota"
   env = {
-    HUGO_DESTINATION = "/src/public"
+    HUGO_DESTINATION = "/src/public",
+    HUGO_ENV = "production"
   }
 }
 
 action "Check build output" {
-  uses = "docker://alpine/git"
-  runs = ["/bin/sh", "-c", "ls -laR"]
+  uses = "docker://klakegg/hugo:0.55.6-ext"
+  runs = ["/bin/sh", "-c", "ls -laR", "&&", "pwd"]
   needs = ["PR Build"]
 }
 
