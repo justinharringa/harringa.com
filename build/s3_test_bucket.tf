@@ -23,5 +23,17 @@ EOF
   website {
     index_document = "index.html"
     error_document = "404.html"
+    routing_rules = <<EOF
+[{
+    "Condition": {
+        "KeyPrefixEquals": "feed.xml"
+    },
+    "Redirect": {
+        "HostName": "harringa.com",
+        "ReplaceKeyWith": "posts/index.xml"
+    }
+}]
+EOF
+
   }
 }
