@@ -1,8 +1,7 @@
 workflow "CD" {
-  resolves = ["Prod s3_website push"]
   on = "push"
+  resolves = ["Slack me master"]
 }
-
 
 action "Master Branch" {
   uses = "actions/bin/filter@b2bea07"
@@ -26,7 +25,7 @@ action "Build" {
   needs = "Submodule update"
   args = "--theme=bota"
   env = {
-    HUGO_DESTINATION = "/github/workspace/public",
+    HUGO_DESTINATION = "/github/workspace/public"
     HUGO_ENV = "production"
   }
 }
@@ -40,9 +39,15 @@ action "Prod s3_website push" {
     S3_BUCKET = "www.harringa.com"
   }
 }
+action "Slack me master" {
+  uses = "pullreminders/slack-github-action@master"
+  needs = ["Prod s3_website push"]
+  args = "{\"channel\":\"C3USVSXS6\",\"text\":\"master ready! Head to https://harringa.com to review\"}"
+  secrets = ["SLACK_BOT_TOKEN"]
+}
 
 workflow "PR" {
-  resolves = ["PR s3_website push"]
+  resolves = ["Slack me PR"]
   on = "push"
 }
 
@@ -80,7 +85,7 @@ action "PR Build" {
   needs = "PR Submodule update"
   args = "--theme=bota"
   env = {
-    HUGO_DESTINATION = "/github/workspace/public",
+    HUGO_DESTINATION = "/github/workspace/public"
   }
 }
 
@@ -98,4 +103,11 @@ action "PR s3_website push" {
   env = {
     S3_BUCKET = "pr.review.harringa.com"
   }
+}
+
+action "Slack me PR" {
+  uses = "pullreminders/slack-github-action@master"
+  needs = ["PR s3_website push"]
+  args = "{\"channel\":\"C3USVSXS6\",\"text\":\"PR ready! Head to http://pr.review.harringa.com.s3-website-us-west-2.amazonaws.com/ to review\"}"
+  secrets = ["SLACK_BOT_TOKEN"]
 }
