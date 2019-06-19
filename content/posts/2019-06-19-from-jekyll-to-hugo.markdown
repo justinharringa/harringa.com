@@ -33,7 +33,9 @@ In order to [convert the site][site-pr], I used `hugo import jekyll` ([see doc][
 to make sure that my permalinks were good enough for Disqus to continue working without having to set up additional mapping.
 So, I essentially just set the `url` for old posts to set the permalinks. I had considered contributing to the 
 [import jekyll][import] command but wasn't quite familiar enough with [Go][go] and [Hugo][hugo] to do that and my site 
-is pretty small. I did the full conversion between the [theme repo][theme] and a single [pull request][site-pr] for illustration.
+is pretty small. I did the full conversion between the [theme repo][theme] and a single [pull request][site-pr] for illustration. In
+the [pull request][site-pr], you'll notice some other tasks that I probably could have done earlier such as improving the markdown
+formatting, getting some consistency, as well as the conversion to [GitHub Actions][github-actions].
 
 ## Leftovers
 There are a few leftovers from this work that I've got on my list of TODOs.
@@ -42,7 +44,7 @@ I would like to get the [bota-hugo-theme][theme] in better shape for others to u
 a few [issues][theme-issues] that I'd like to address still. Feel free to contribute and add issues!
 ### Follow-on Posts
 * Post about the motivations, process, and experience of switching from [Travis CI][travis] to [GitHub Actions][github-actions] (hint: 
-I really like [GitHub Actions][github-actions]
+I really like [GitHub Actions][github-actions])
 * I created [actions-s3_website][s3-action] and would like to post about that.
 * Post about the [bota-hugo-theme][theme]
 
