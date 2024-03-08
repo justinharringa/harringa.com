@@ -63,13 +63,6 @@ jobs:
   # Deployment job
   deploy:
     runs-on: ubuntu-latest
-    container:
-      image: justinharringa/s3_website:master
-      env:
-        AWS_ACCESS_KEY_ID: secrets.AWS_ACCESS_KEY_ID
-        AWS_SECRET_ACCESS_KEY: secret.AWS_SECRET_ACCESS_KEY
-        AWS_CLOUDFRONT_DISTRIBUTION: secret.AWS_CLOUDFRONT_DISTRIBUTION
-        S3_BUCKET: www.harringa.com
     needs: build
     steps:
       - uses: actions/download-artifact@v4
@@ -80,4 +73,10 @@ jobs:
           name: s3-website
       - name: Deploy to S3
         id: deploy
+        uses: docker://justinharringa/s3_website:master
+        env:
+          AWS_ACCESS_KEY_ID: secrets.AWS_ACCESS_KEY_ID
+          AWS_SECRET_ACCESS_KEY: secret.AWS_SECRET_ACCESS_KEY
+          AWS_CLOUDFRONT_DISTRIBUTION: secret.AWS_CLOUDFRONT_DISTRIBUTION
+          S3_BUCKET: www.harringa.com
         run: s3_website push --site public
