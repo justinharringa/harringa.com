@@ -50,9 +50,15 @@ jobs:
           HUGO_DESTINATION: /github/workspace/public
         run: hugo --theme=bota
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
+          name: harringa-site
           path: ./public
+      - name: Upload s3_website.yml
+        uses: actions/upload-artifact@v4
+        with:
+          name: s3-website
+          path: ./
 
   # Deployment job
   deploy:
@@ -66,6 +72,12 @@ jobs:
         S3_BUCKET: www.harringa.com
     needs: build
     steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: harringa-site
+      - uses: actions/download-artifact@v4
+        with:
+          name: s3-website
       - name: Deploy to S3
         id: deploy
         run: s3_website push --site public
