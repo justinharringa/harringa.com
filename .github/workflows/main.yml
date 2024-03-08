@@ -79,4 +79,5 @@ jobs:
           AWS_SECRET_ACCESS_KEY: secret.AWS_SECRET_ACCESS_KEY
           AWS_CLOUDFRONT_DISTRIBUTION: secret.AWS_CLOUDFRONT_DISTRIBUTION
           S3_BUCKET: www.harringa.com
-        run: s3_website push --site public
+        with:
+          args: push --site public
