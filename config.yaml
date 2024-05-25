@@ -28,16 +28,9 @@ params:
 
 menu:
   main:
-  - identifier: webmail
-    name: Webmail
-    url: http://mail.harringa.com/
-    weight: -110
   - name: Blog Posts
     url: /posts/
     weight: -100
-  - name: Portfolio
-    url: /portfolio/
-    weight: -90
   - name: Links
     url: /links/
     weight: -80
