@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/justinharringa/harringa.com.svg?branch=master)](https://travis-ci.org/justinharringa/harringa.com)
+[![Deploy Site](https://github.com/justinharringa/harringa.com/actions/workflows/main.yml/badge.svg)](https://github.com/justinharringa/harringa.com/actions/workflows/main.yml)
 
 # Purpose 
 
