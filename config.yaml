@@ -28,7 +28,6 @@ markup:
 params:
   author: Justin Harringa
   siteDescription: Generally used as a playground for Justin Harringa but also includes blog posts. Of course, all of that is subject to change.
-  googleMapsKey: AIzaSyC7CdiDDoEfq6B-VK1Zbi8bwq6fDkakC1A
   blogPostTaxonomy: posts
 
 menu:
