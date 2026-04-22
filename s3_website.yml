@@ -18,13 +18,10 @@ gzip:
   - .js
 
 exclude_from_upload:
-  - Gemfile
-  - Gemfile.lock
   - .md
   - .gitignore
   - .git
   - .env
   - .DS_Store
-  - .bundle
 
 cloudfront_distribution_id: <%= ENV['AWS_CLOUDFRONT_DISTRIBUTION'] %>

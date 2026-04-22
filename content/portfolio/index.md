@@ -3,6 +3,7 @@ layout: default
 title: Portfolio
 permalink: /portfolio/
 header-order: 1
+draft: true
 ---
 <style type="text/css">
 .my-picture {
