@@ -25,10 +25,10 @@ hugo server -D -F
 For a production build matching what CI runs:
 
 ```
-hugo --theme=bota
+hugo
 ```
 
-Site configuration lives in `config.yaml`; content lives under `content/`.
+Site configuration lives in `config.yaml` (which also sets `theme: bota`); content lives under `content/`.
 
 # Deployment
 

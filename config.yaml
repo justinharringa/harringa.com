@@ -18,7 +18,7 @@ taxonomies:
 googleAnalytics: "UA-4900256-1"
 disqusShortname: "harringa"
 
-#theme: bota
+theme: bota
 
 params:
   author: Justin Harringa

@@ -38,4 +38,4 @@ jobs:
         env:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
-        run: hugo --theme=bota --destination ./public --printPathWarnings
+        run: hugo --destination ./public --printPathWarnings
