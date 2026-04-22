@@ -15,8 +15,8 @@ taxonomies:
   category: categories
   tag: tags
 
-[services]
-  [services.googleAnalytics]
+services:
+  googleAnalytics:
     ID: "G-JEBDNF11BH"
 
 disqusShortname: "harringa"
