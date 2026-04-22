@@ -1,27 +1,37 @@
 [![Deploy Site](https://github.com/justinharringa/harringa.com/actions/workflows/main.yml/badge.svg)](https://github.com/justinharringa/harringa.com/actions/workflows/main.yml)
 
-# Purpose 
+# Purpose
 
-My personal site which generally gets used as a playground. Though I am 
-planning on adding some more serious content soon.
+My personal site, which generally gets used as a playground. Built with [Hugo](https://gohugo.io/) using the [bota-hugo-theme](https://github.com/justinharringa/bota-hugo-theme) (pulled in as a git submodule).
 
 # Getting Started
-To run the Jekyll process:
-* bundle install
-* bundle exec rake test
 
-# Responsive images
-Images are created by using Gulp and [gulp-responsive](https://npmjs.com/gulp-responsive). The images need
-to be referenced in the html/css files in order to be processed (this is what triggers them to be created/minified).
-At the moment, this portion is run on the developer machine and the images are checked into git.
-Eventually it may be nice to put this in the deployment pipeline. However, some installation requirements
-make that take more time than I'd like in the pipeline. The current Rakefile is checking links so if this hasn't been 
-run on some new images that are supposed to be responsive, then the build will fail (which should trigger the memory that
-this will need to be run). 
+The theme lives in a submodule, so clone with submodules:
 
-Requirements:
-- NPM
-- ```npm install``` in this directory
+```
+git clone --recurse-submodules https://github.com/justinharringa/harringa.com.git
+```
 
-Running: 
-* Simply run ```gulp```
+(Or, if you already cloned without `--recurse-submodules`, run `git submodule update --init --recursive`.)
+
+Install [Hugo extended](https://gohugo.io/installation/) — the theme uses SCSS, so the extended build is required.
+
+For a local preview with drafts, live reload, and future-dated posts:
+
+```
+hugo server -D -F
+```
+
+For a production build matching what CI runs:
+
+```
+hugo
+```
+
+Site configuration lives in `config.yaml` (which also sets `theme: bota`); content lives under `content/`.
+
+# Deployment
+
+Pushes to `main` trigger [`.github/workflows/main.yml`](.github/workflows/main.yml), which builds the site with Hugo and deploys the `public/` output to the `www.harringa.com` S3 bucket via the [justinharringa/s3_website](https://github.com/justinharringa/actions-s3_website) Docker image. The same action invalidates the CloudFront distribution on each deploy.
+
+Pull requests run [`.github/workflows/pr.yml`](.github/workflows/pr.yml), which builds with Hugo as a sanity check but does not deploy.
