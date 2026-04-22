@@ -15,6 +15,10 @@ taxonomies:
   category: categories
   tag: tags
 
+[services]
+  [services.googleAnalytics]
+    ID: "G-JEBDNF11BH"
+
 disqusShortname: "harringa"
 
 theme: bota
