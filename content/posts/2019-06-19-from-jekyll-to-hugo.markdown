@@ -2,6 +2,9 @@
 layout: post
 title:  "From Jekyll to Hugo"
 date:   2019-06-19 07:38:42 -0700
+url: posts/2019/06/19/from-jekyll-to-hugo/
+aliases:
+  - /posts/2019/06/From-Jekyll-to-Hugo/
 tags:
 - jekyll
 - hugo
