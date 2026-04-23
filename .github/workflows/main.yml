@@ -47,7 +47,7 @@ jobs:
           HUGO_ENV: production
         run: hugo --destination ./public
       - name: Upload site artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: harringa-site
           path: ./public
@@ -60,7 +60,7 @@ jobs:
       - name: Checkout (for s3_website.yml)
         uses: actions/checkout@v4
       - name: Download built site
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: harringa-site
           path: ./public
