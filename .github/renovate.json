@@ -5,6 +5,9 @@
     ":dependencyDashboard",
     ":semanticCommits"
   ],
+  "bundler": {
+    "enabled": false
+  },
   "customManagers": [
     {
       "customType": "regex",
