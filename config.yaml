@@ -23,6 +23,12 @@ disqusShortname: "harringa"
 
 theme: bota
 
+# Hugo 0.162.0 disallows text/html content files by default via security.allowContent.
+# This site has hand-authored .html posts (migrated from Blogger), so opt back in.
+security:
+  allowContent:
+    - '.*'
+
 markup:
   goldmark:
     renderer:
