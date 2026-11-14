@@ -18,7 +18,7 @@ credentials, so the triage skill still checks `build` itself.
 | Require status check `build` | The `build` job in `pr.yml` ("PR Build Check"). It has no path filter, so it always reports and cannot leave a PR blocked forever. |
 | **Not** "require branches to be up to date" | It makes every push to `main` rebase every open Renovate PR and re-run its build. |
 | Block force-push and deletion | `main` is what gets deployed. |
-| Bypass: repository admin, **pull requests only** | Break-glass. The owner can merge a PR while the build is broken, but still cannot push to `main` directly. |
+| Bypass: none | Nobody bypasses, the owner included: a merge with the check red, pending or missing is refused by GitHub, not by anyone's judgment. If CI is down and you must merge, temporarily set the ruleset to Disabled in Settings, merge, and re-enable it. The JSON has had no bypass since 2026-11-14; a live ruleset imported earlier still has the admin bypass until it is re-imported. |
 
 ### The check name is shared
 

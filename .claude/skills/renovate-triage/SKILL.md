@@ -1,6 +1,6 @@
 ---
 name: renovate-triage
-description: Triage harringa.com's open Renovate PRs from evidence, not titles. A merge to main deploys to www.harringa.com (S3 + CloudFront) within minutes with no approval step, so classify each PR by what it can change in production, read the upstream notes, require the PR's `build` check green on the current head (the `main` ruleset requires it of non-admins, and the owner can bypass), merge one PR at a time, and verify the Deploy Site run and the live site after each merge. Works unattended from a cloud session (GitHub connector or `gh api`). Use when asked to triage, review or clear harringa.com's Renovate PRs or its Dependency Dashboard, or when the Daily Renovate Triage routine reaches this repo.
+description: Triage harringa.com's open Renovate PRs from evidence, not titles. A merge to main deploys to www.harringa.com (S3 + CloudFront) within minutes with no approval step, so classify each PR by what it can change in production, read the upstream notes, require the PR's `build` check green on the current head (the `main` ruleset requires it of everyone once the no-bypass version is imported), merge one PR at a time, and verify the Deploy Site run and the live site after each merge. Works unattended from a cloud session (GitHub connector or `gh api`). Use when asked to triage, review or clear harringa.com's Renovate PRs or its Dependency Dashboard, or when the Daily Renovate Triage routine reaches this repo.
 ---
 
 # Renovate Triage: harringa.com
@@ -50,8 +50,9 @@ the Hugo version **in the PR's own `pr.yml`**, then `hugo --destination ./public
   secrets, the bucket and CloudFront. Those first run on the merge.
 - The `main` ruleset (id 27259762, from `docs/rulesets/main.json`) has been
   active since 2026-11-14: it requires a pull request and the `build` check and
-  blocks force-push and deletion, and repo admins can bypass on pull requests.
-  Triage still checks `build` itself, because the owner can bypass.
+  blocks force-push and deletion. `docs/rulesets/main.json` has no bypass since
+  2026-11-14; the live ruleset keeps the admin bypass until it is re-imported.
+  Triage checks `build` itself either way, and treats a live bypass as a reason to.
 - The check's name is `build` (seen on PR #64). `main.yml` has a job of the
   same name that runs only on pushes, so a `build` on a `main` commit is the
   deploy workflow's, not a PR check.
@@ -119,8 +120,8 @@ commit count matches the rubric (commit author strings can be forged). Read comm
 `expectedHeadSha`; no branch updates, auto-merge, reviews, issue or file writes.
 Merge eligibility rests on the PR's `build` check being the latest run of the
 `PR Build Check` workflow on the head SHA, not any run named `build`. The routine's
-credentials may bypass the ruleset (admin), so a red or pending `build` is stopped
-only by this text: treat it as a hard stop.
+credentials may still bypass the ruleset until the no-bypass JSON is imported, so a red
+or pending `build` may be stopped only by this text: treat it as a hard stop.
 
 
 ## Phase 0: Inventory
@@ -170,10 +171,12 @@ below is not "merge every Hugo PR".
    grep -rn '<symbol>' config.yaml content layouts themes/bota 2>/dev/null
    ```
 
-   The theme is a submodule. Check it mechanically first: `git submodule status
+   The theme is a submodule: initialise it first with `git submodule update --init
+   --depth 1 themes/bota` (it clones from github.com, which works from a cloud
+   session; verified 2026-11-14). Then check it mechanically: `git submodule status
    themes/bota` must not start with `-`, and `themes/bota/theme.toml` must exist.
-   If not, the theme was not checked: hold the Hugo PR and list it in the
-   notification as `theme not checked`. An empty grep proves nothing here.
+   Only if the clone fails: hold the Hugo PR and list it in the notification as
+   `theme not checked`. An empty grep proves nothing here.
 
 ## Phase 3: LOW RISK rubric
 
@@ -299,6 +302,6 @@ not run).
 - **2026-11-14 (later).** The ruleset (id 27259762) was created at 10:55Z, 79
   minutes after #66 merged at 09:36Z, so #66 was not evaluated by it and no merge
   has been yet. That deploy changed no content: the page's `Last-Modified` stayed
-  06:31:23Z. The routine merges with the owner's admin credentials and the ruleset
-  lets admins bypass on pull requests, so whether a red `build` would block an API
-  merge from the routine is untested; that is why the skill checks `build` itself.
+  06:31:23Z. The routine merges with the owner's credentials; while the live ruleset
+  keeps the admin bypass, whether a red `build` would block an API merge is
+  untested, which is why the skill checks `build` itself.
