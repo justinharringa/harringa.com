@@ -46,13 +46,32 @@ the Hugo version **in the PR's own `pr.yml`**, then `hugo --destination ./public
   turns into a removal in the next minor is worth a line in the report.
 - It says nothing about the **deploy job**: the s3_website image, the AWS
   secrets, the bucket and CloudFront. Those first run on the merge.
-- As of 2026-11-14 `main` had no branch protection and no ruleset (the REST API
-  returned 404 and `[]`). `docs/rulesets/main.json` proposes one that requires
-  `build`. Until it is imported, **nothing enforces `build`**, so triage checks
-  it itself; afterwards triage still checks it, because the owner can bypass.
+- The `main` ruleset (id 27259762, from `docs/rulesets/main.json`) has been
+  active since 2026-11-14: it requires a pull request and the `build` check and
+  blocks force-push and deletion, and repo admins can bypass on pull requests.
+  Triage still checks `build` itself, because the owner can bypass.
 - The check's name is `build` (seen on PR #64). `main.yml` has a job of the
   same name that runs only on pushes, so a `build` on a `main` commit is the
   deploy workflow's, not a PR check.
+
+## Preflight: what can this session reach?
+
+Run once, before Phase 0. A blocked host is an **environment gap**, not a
+property of any PR, and it reaches the owner as one line naming the host.
+
+```bash
+for h in www.harringa.com \
+         raw.githubusercontent.com \
+         hub.docker.com; do
+  printf '%-34s ' "$h"; curl -sS -m 12 -o /dev/null -w '%{http_code}\n' "https://$h/" 2>&1 | tail -1
+done
+```
+
+`000`, or `CONNECT tunnel failed, response 403`, means the egress allow list
+refuses the host; 2xx and 3xx are fine. **curl and WebFetch resolve
+differently** (on 2026-11-14 WebFetch failed with `ENOTFOUND` for a host that curl
+reached), so when WebFetch fails for a host, try curl before calling the notes
+unreachable.
 
 ## Phase 0: Inventory
 
@@ -185,6 +204,13 @@ when:**
 Merged PRs that passed Phase 4 are silent; record them in the report. Message
 shape: `harringa.com: <action needed> — #<n> <title>: <one-line evidence>`.
 
+**Also notify, and only this:**
+- **On Mondays (UTC), one line** `held >7 days: #<n>, #<n>, ...` for each PR that
+  has waited more than 7 days since its last change, so a parked PR comes back
+  weekly: not daily, and not never.
+- **An environment gap** from the Preflight, one line per blocked host:
+  `environment: <host> blocked, add it to the allow list`.
+
 ## Known false alarms
 
 | Observation | Why it's fine |
@@ -208,3 +234,7 @@ not run).
   routine's network once `*.harringa.com` is on the allow list, and the generator
   tag works: after #65 (Hugo 0.170.0) merged at 06:30Z, `Deploy Site` finished at
   06:31Z and the live page named `Hugo 0.170.0`, with `Last-Modified` 06:31:23Z.
+- **2026-11-14 (later).** The ruleset was imported and the skill itself (#66) merged
+  through it with `build` green. That merge deployed with no content change, so
+  the live page's `Last-Modified` and ETag stayed the same, which is what an
+  unchanged build looks like.
