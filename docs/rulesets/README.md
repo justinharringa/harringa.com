@@ -8,8 +8,9 @@ and [justinharringa/knuckles](https://github.com/justinharringa/knuckles/tree/ma
 ## `main.json`: nothing reaches the live site without a build
 
 A push to `main` deploys to www.harringa.com within minutes, with no approval
-step (`.github/workflows/main.yml`). So the ruleset is the only gate in front of
-production.
+step (`.github/workflows/main.yml`). So the ruleset is the main gate in front of production, with one limit: a repo
+admin can bypass it on a pull request, and the routine merges with the owner's
+credentials, so the triage skill still checks `build` itself.
 
 | Rule | Why |
 |---|---|
@@ -39,7 +40,7 @@ and change `context` here in the same PR.
 ## Applying it
 
 Order matters: if the ruleset is imported before `build` has ever reported on a
-PR, every open PR blocks. `build` last reported on PR #64, so it is safe today.
+PR, every open PR blocks. `build` has reported on #64, #66 and #67, so it is safe today.
 
 1. **Settings → Rules → Rulesets → New ruleset → Import a ruleset**, choose
    `docs/rulesets/main.json`. Or:

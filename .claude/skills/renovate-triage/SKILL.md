@@ -1,6 +1,6 @@
 ---
 name: renovate-triage
-description: Triage harringa.com's open Renovate PRs from evidence, not titles. A merge to main deploys to www.harringa.com (S3 + CloudFront) within minutes with no approval step, so classify each PR by what it can change in production, read the upstream notes, require the PR's `build` check green on the current head (nothing on GitHub is known to enforce it), merge one PR at a time, and verify the Deploy Site run and the live site after each merge. Works unattended from a cloud session (GitHub connector or `gh api`). Use when asked to triage, review or clear harringa.com's Renovate PRs or its Dependency Dashboard, or when the Daily Renovate Triage routine reaches this repo.
+description: Triage harringa.com's open Renovate PRs from evidence, not titles. A merge to main deploys to www.harringa.com (S3 + CloudFront) within minutes with no approval step, so classify each PR by what it can change in production, read the upstream notes, require the PR's `build` check green on the current head (the `main` ruleset requires it of non-admins, and the owner can bypass), merge one PR at a time, and verify the Deploy Site run and the live site after each merge. Works unattended from a cloud session (GitHub connector or `gh api`). Use when asked to triage, review or clear harringa.com's Renovate PRs or its Dependency Dashboard, or when the Daily Renovate Triage routine reaches this repo.
 ---
 
 # Renovate Triage: harringa.com
@@ -56,22 +56,55 @@ the Hugo version **in the PR's own `pr.yml`**, then `hugo --destination ./public
 
 ## Preflight: what can this session reach?
 
-Run once, before Phase 0. A blocked host is an **environment gap**, not a
-property of any PR, and it reaches the owner as one line naming the host.
+Run once, before Phase 0. It prints nothing but `preflight ok` when every URL
+answers. A URL that does not is an **environment gap**, not a property of any PR.
 
 ```bash
-for h in www.harringa.com \
-         raw.githubusercontent.com \
-         hub.docker.com; do
-  printf '%-34s ' "$h"; curl -sS -m 12 -o /dev/null -w '%{http_code}\n' "https://$h/" 2>&1 | tail -1
+bad=0
+for u in https://www.harringa.com/ \
+         https://raw.githubusercontent.com/ \
+         https://api.github.com/; do
+  c=$(curl -sS -m 12 -o /dev/null -w '%{http_code}' "$u" 2>/dev/null) || true
+  case "$c" in 2??|3??|4??) ;; *) echo "UNREACHABLE ($c) $u"; bad=1 ;; esac
 done
+[ "$bad" = 0 ] && echo "preflight ok"
 ```
 
-`000`, or `CONNECT tunnel failed, response 403`, means the egress allow list
-refuses the host; 2xx and 3xx are fine. **curl and WebFetch resolve
-differently** (on 2026-11-14 WebFetch failed with `ENOTFOUND` for a host that curl
-reached), so when WebFetch fails for a host, try curl before calling the notes
-unreachable.
+`UNREACHABLE (000)` means the egress allow list refuses the host, or it is down:
+a timeout looks the same. Any HTTP status, including 403 or 404, means the host
+answered. Probe the path the skill needs, not the site root (a root can fail
+while the path works). **curl and WebFetch resolve differently:** on 2026-11-14
+WebFetch failed with `ENOTFOUND` for `tailscale.com` while curl returned 200, so
+when WebFetch fails for a host, try curl before calling the notes unreachable.
+
+## What counts as new (notifications)
+
+The routine has no memory of earlier runs, so "new" has to come from dates
+GitHub itself keeps. Never use `updated_at`: Renovate rebases, Cloudflare and CI
+bot comments, and PR-body refreshes all move it without anything changing.
+
+- Consider only PRs authored by `renovate[bot]` or `dependabot[bot]`. The owner's
+  and Claude's own PRs are not dependency triage.
+- **New** = `created_at` within the last 36 hours. **Head changed** = the
+  committer date of the PR's last commit (`pull_request_read` `get_commits`)
+  within the last 36 hours. Use 36, not 24, so one late or skipped run does not
+  lose a PR; a PR may then appear twice, which is acceptable.
+- Judge a PR on the run that sees its checks finished. A PR whose checks are
+  still pending is neither held nor new: leave it for the next run.
+- **Parked** = the `blocked-upstream` label, or the owner's newest comment says it
+  is held. A parked PR is news only if its diff grew beyond the dependency's own
+  files, or its checks went from green to red. A Renovate rebase is not news.
+- **Blocker cleared** is news only if the event that cleared it (a release, a
+  merged PR) is dated inside the window. If it cleared earlier, it appears once
+  in the Monday digest as `unblocked: <repo>#<n>`, not daily.
+- **On Mondays (UTC)** add a digest, and leave it out when both lists are empty:
+  `held >7 days:` bot PRs that need the owner and are not parked, aged from
+  `created_at` or the owner's newest comment, whichever is later (ignore bot
+  activity and rebases); and `new this week:` bot PRs created or head-changed in
+  the last 7 days that need the owner, so a lost day costs at most a week.
+- **An environment gap** is notified only when it changed a decision this run (notes
+  unreachable so a PR was held, a smoke step that could not run). Otherwise it
+  appears only in the Monday digest.
 
 ## Phase 0: Inventory
 
@@ -127,6 +160,9 @@ that failed.
 
 - [ ] Bucket is *Candidate LOW RISK*
 - [ ] Notes read (Phase 2), with nothing removed or breaking that this site uses
+- [ ] The theme was checked: `themes/bota` is checked out in the clone and the grep ran.
+      If the directory is empty, the Hugo bump is held and reported as "theme not
+      checked"; it is not LOW RISK on the release notes alone
 - [ ] The PR's `build` check is **SUCCESS on the current head SHA**, and its log
       has no new `ERROR`. Pending is not success
 - [ ] Files touched are only the `HUGO_VERSION` line in `main.yml` and `pr.yml`,
@@ -165,7 +201,10 @@ and `expectedHeadSha: <head you reviewed>`.
    should name the merged version. **Use `--compressed`**: the page is served
    gzipped, and without it grep sees nothing. CloudFront can serve the old page
    for a minute or two after the invalidation, so recheck once before calling it
-   stale.
+   stale. If the generator still names the old version about five minutes later,
+   the deploy did not go live: notify it as a failed deploy. Also fetch the
+   stylesheet the page links and one post page and require 200 for both; a Hugo
+   or Sass change can build green and break assets.
 3. **If the host cannot be reached** from the session (the egress proxy can
    refuse hosts), say so in the report. The deploy run is then the only
    evidence, and the report must not claim the site was checked.
@@ -197,19 +236,13 @@ time, with Phase 4 after each.
 when:**
 1. **The site failed Phase 4 after a merge.** Always, first in the message.
 2. A PR needs the owner: Ask first, or held because its own change broke
-   `build`. Notify on the day it is opened or its head changes (`updated_at`
-   within 24h). A PR that is merely still held stays out of the notification.
+   `build`. Notify on the first run that sees it as needing the owner, or when its head changes (see *What counts as new*). A PR that is merely still held stays out of the notification.
 3. A Dependabot PR appeared.
 
 Merged PRs that passed Phase 4 are silent; record them in the report. Message
 shape: `harringa.com: <action needed> — #<n> <title>: <one-line evidence>`.
 
-**Also notify, and only this:**
-- **On Mondays (UTC), one line** `held >7 days: #<n>, #<n>, ...` for each PR that
-  has waited more than 7 days since its last change, so a parked PR comes back
-  weekly: not daily, and not never.
-- **An environment gap** from the Preflight, one line per blocked host:
-  `environment: <host> blocked, add it to the allow list`.
+See *What counts as new* for the Monday digest and for environment gaps.
 
 ## Known false alarms
 
@@ -234,7 +267,9 @@ not run).
   routine's network once `*.harringa.com` is on the allow list, and the generator
   tag works: after #65 (Hugo 0.170.0) merged at 06:30Z, `Deploy Site` finished at
   06:31Z and the live page named `Hugo 0.170.0`, with `Last-Modified` 06:31:23Z.
-- **2026-11-14 (later).** The ruleset was imported and the skill itself (#66) merged
-  through it with `build` green. That merge deployed with no content change, so
-  the live page's `Last-Modified` and ETag stayed the same, which is what an
-  unchanged build looks like.
+- **2026-11-14 (later).** The ruleset (id 27259762) was created at 10:55Z, 79
+  minutes after #66 merged at 09:36Z, so #66 was not evaluated by it and no merge
+  has been yet. That deploy changed no content: the page's `Last-Modified` stayed
+  06:31:23Z. The routine merges with the owner's admin credentials and the ruleset
+  lets admins bypass on pull requests, so whether a red `build` would block an API
+  merge from the routine is untested; that is why the skill checks `build` itself.
