@@ -139,13 +139,14 @@ and `expectedHeadSha: <head you reviewed>`.
 
    ```bash
    curl -sSI https://www.harringa.com/ | head -5      # expect HTTP 200
-   curl -sS https://www.harringa.com/ | grep -o -i '<meta name="generator"[^>]*>'
+   curl -sS --compressed https://www.harringa.com/ | grep -o -i '<meta name="generator"[^>]*>'
    ```
 
-   If the theme emits Hugo's generator tag, it should name the new version. If
-   it does not, say "version not visible on the page" rather than inferring from
-   the green run. CloudFront can serve the old page for a minute or two after
-   the invalidation, so recheck once before calling it stale.
+   The page carries `<meta name="generator" content="Hugo X.Y.Z">`, which
+   should name the merged version. **Use `--compressed`**: the page is served
+   gzipped, and without it grep sees nothing. CloudFront can serve the old page
+   for a minute or two after the invalidation, so recheck once before calling it
+   stale.
 3. **If the host cannot be reached** from the session (the egress proxy can
    refuse hosts), say so in the report. The deploy run is then the only
    evidence, and the report must not claim the site was checked.
@@ -201,10 +202,9 @@ not run).
 
 ## Known characteristics
 
-- **2026-11-14, skill drafted** with no PRs open. Renovate had last opened Hugo
-  bumps #63 and #64 (merged 2026-10-13 and 2026-10-28, by merge commit). Verified:
-  `main` unprotected, check name `build`. Not verified: whether the theme emits a
-  Hugo generator tag (the `themes/bota` submodule was not checked out and its
-  repo was not readable from that session), and whether www.harringa.com is
-  reachable (the session's egress proxy returned 403). Fill these in after the
-  first real run.
+- **2026-11-14, skill drafted** with no PRs open. Renovate's Hugo bumps #63, #64
+  and #65 were merged by the owner with merge commits. Verified: `main` was
+  unprotected, the PR check is `build`, www.harringa.com is reachable from the
+  routine's network once `*.harringa.com` is on the allow list, and the generator
+  tag works: after #65 (Hugo 0.170.0) merged at 06:30Z, `Deploy Site` finished at
+  06:31Z and the live page named `Hugo 0.170.0`, with `Last-Modified` 06:31:23Z.
