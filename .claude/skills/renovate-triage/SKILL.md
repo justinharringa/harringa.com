@@ -46,11 +46,13 @@ the Hugo version **in the PR's own `pr.yml`**, then `hugo --destination ./public
   turns into a removal in the next minor is worth a line in the report.
 - It says nothing about the **deploy job**: the s3_website image, the AWS
   secrets, the bucket and CloudFront. Those first run on the merge.
-- I do not know whether `main` has a ruleset or branch protection. Assume
-  **nothing enforces `build`**, so triage checks it itself. If a probe shows
-  protection exists, update this section.
-- Confirm the check's exact name from the first PR's check runs (expected
-  `build`) and correct this file if it differs.
+- As of 2026-11-14 `main` had no branch protection and no ruleset (the REST API
+  returned 404 and `[]`). `docs/rulesets/main.json` proposes one that requires
+  `build`. Until it is imported, **nothing enforces `build`**, so triage checks
+  it itself; afterwards triage still checks it, because the owner can bypass.
+- The check's name is `build` (seen on PR #64). `main.yml` has a job of the
+  same name that runs only on pushes, so a `build` on a `main` commit is the
+  deploy workflow's, not a PR check.
 
 ## Phase 0: Inventory
 
@@ -200,6 +202,9 @@ not run).
 ## Known characteristics
 
 - **2026-11-14, skill drafted** with no PRs open. Renovate had last opened Hugo
-  bumps #63 and #64 (merged 2026-10-13 and 2026-10-28, by merge commit). Not yet
-  verified: whether `main` is protected, the exact check name, and whether the
-  theme emits a Hugo generator tag. Fill these in after the first real run.
+  bumps #63 and #64 (merged 2026-10-13 and 2026-10-28, by merge commit). Verified:
+  `main` unprotected, check name `build`. Not verified: whether the theme emits a
+  Hugo generator tag (the `themes/bota` submodule was not checked out and its
+  repo was not readable from that session), and whether www.harringa.com is
+  reachable (the session's egress proxy returned 403). Fill these in after the
+  first real run.
